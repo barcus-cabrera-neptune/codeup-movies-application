@@ -3,6 +3,7 @@
 
 
 
+
 // window.addEventListener('load', (event) => {
 //     console.log('page is fully loaded');
 // });
@@ -11,12 +12,13 @@
 /*$(window).on('load', function(){
     setTimeout(removeLoader, 2000); //wait for page load PLUS two seconds.
 });*/
-function removeLoader(){
-    $( "#loadingDiv" ).fadeOut(1000, function() {
+function removeLoader() {
+    $("#loadingDiv").fadeOut(1000, function () {
         // fadeOut complete. Remove the loading div
-        $( "#loadingDiv" ).remove(); //makes page more lightweight
+        $("#loadingDiv").remove(); //makes page more lightweight
     });
 }
+
 
 //Get Method?
 const getMovies = () => {
@@ -29,11 +31,40 @@ const getMovies = () => {
             console.log(movies);
             let htmlStr = "";
             for (let movie of movies) {
-                htmlStr += `<h1>${movie.title}</h1><p><strong>Director:</strong> ${movie.director} <br><strong>Actors: </strong> ${movie.actors}<br><strong>Rating: </strong> ${movie.rating}</p>`;
+                htmlStr += `<h1>${movie.title}</h1><p><strong>Director:</strong> ${movie.director} <br>`;
+                htmlStr += `<strong>Actors: </strong> ${movie.actors}<br><strong>Rating: </strong> ${movie.rating}<br><strong>Id : </strong>${movie.id}</p><button class="editMovie" >Edit Movie Info</button>`;
+                htmlStr += `<button class="deleteMovie" type="button">Delete</button>`;
+
+
             }
+            // for(let i = 0; i < movies.title.length; i++){
+            //     var selctorOpt =
+            // }
+
 
             setTimeout(function (){
                 $("#container").html(htmlStr);
+                $('.editMovie').click(() =>{
+                    console.log("hello");
+
+                    let editMovie = {
+                        title: $('#editName').val(),
+                        director: $('#editDirector').val(),
+                        rating: $('#editRating').val()
+                    }
+
+                    let putOptions = {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(editMovie)
+                    }
+
+                    fetch(`https://lunar-spice-chocolate.glitch.me/movies/2`,putOptions)
+                        .then(resp => resp.json())
+                        .then(getMovies);
+                });
             }, 1050)
 
         });
@@ -62,23 +93,25 @@ const getMovies = () => {
 
     });
 
-    $('#editMovie').click(() =>{
+    // $('.editMovie').click(() =>{
+    //     console.log("hello");
+    //     let editMovie = {
+    //         title: $('#editName').val(),
+    //         director: $('#editDirector').val(),
+    //         rating: $('#editRating').val()
+    //     }
+    //
+    //     let putOptions = {
+    //         method: 'PUT',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify(editMovie)
+    //     }
+    //
+    //     fetch("https://lunar-spice-chocolate.glitch.me/movies/2",putOptions)
+    //         .then(resp => resp.json())
+    //         .then(getMovies);
+    // });
 
-        let editMovie = {
-            title: $('#editName').val(),
-            director: $('#editDirector').val(),
-            rating: $('#editRating').val()
-        }
 
-        let putOptions = {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(editMovie)
-        }
-
-        fetch("https://lunar-spice-chocolate.glitch.me/movies/5",putOptions)
-            .then(resp => resp.json())
-            .then(getMovies);
-    });
