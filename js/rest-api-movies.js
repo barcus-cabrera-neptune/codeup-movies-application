@@ -29,7 +29,7 @@ const getMovies = () => {
             console.log(movies);
             let htmlStr = "";
             for (let movie of movies) {
-                htmlStr += `<h1>${movie.title}</h1><p><strong>Director:</strong> ${movie.director} <br><strong>Actors: </strong> ${movie.actors}</p>`;
+                htmlStr += `<h1>${movie.title}</h1><p><strong>Director:</strong> ${movie.director} <br><strong>Actors: </strong> ${movie.actors}<br><strong>Rating: </strong> ${movie.rating}</p>`;
             }
 
             setTimeout(function (){
@@ -39,9 +39,6 @@ const getMovies = () => {
         });
 }
     getMovies();
-
-
-
 
     $('#newMovie').click(() =>{
 
@@ -59,22 +56,29 @@ const getMovies = () => {
             body: JSON.stringify(addMovie)
         }
 
-        // console.log(addMovie.title);
         fetch("https://lunar-spice-chocolate.glitch.me/movies",postOptions)
             .then(resp => resp.json())
             .then(getMovies);
 
-       // fetch("https://lunar-spice-chocolate.glitch.me/movies")
-       //     .then(resp => resp.json())
-       //     .then(movies => {
-       //         for (let movie of movies) {
-       //             if(movie.title !== addMovie.title || movie.director !== addMovie.director || movie.rating !== addMovie.rating){
-       //                 fetch("https://lunar-spice-chocolate.glitch.me/movies", postOptions)
-       //                     .then(getMovies);
-       //             }else {
-       //                 alert("Hey, that book already exists!");
-       //                 break;
-       //             }
-       //         }
-       //     })
+    });
+
+    $('#editMovie').click(() =>{
+
+        let editMovie = {
+            title: $('#editName').val(),
+            director: $('#editDirector').val(),
+            rating: $('#editRating').val()
+        }
+
+        let putOptions = {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(editMovie)
+        }
+
+        fetch("https://lunar-spice-chocolate.glitch.me/movies/5",putOptions)
+            .then(resp => resp.json())
+            .then(getMovies);
     });
