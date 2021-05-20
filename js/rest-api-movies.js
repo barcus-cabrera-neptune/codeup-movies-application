@@ -1,17 +1,6 @@
 "use strict";
 
-
-
-
-
-// window.addEventListener('load', (event) => {
-//     console.log('page is fully loaded');
-// });
-
-
-/*$(window).on('load', function(){
-    setTimeout(removeLoader, 2000); //wait for page load PLUS two seconds.
-});*/
+//Removes the div of the load image
 function removeLoader() {
     $("#loadingDiv").fadeOut(1000, function () {
         // fadeOut complete. Remove the loading div
@@ -20,7 +9,9 @@ function removeLoader() {
 }
 
 
-//Get Method?
+//Get Method
+
+// Main Function
 const getMovies = () => {
     $('#container').append('<div style="" id="loadingDiv"><div class="loader"><img src="img/Loading.gif"' +
         ' alt="loadingGif"></div></div>');
@@ -31,14 +22,15 @@ const getMovies = () => {
             console.log(movies);
             let htmlStr = "";
             for (let movie of movies) {
+                console.log(movies);
                 htmlStr += `<h1>${movie.title}</h1><p><strong>Director:</strong> ${movie.director} <br>`;
                 htmlStr += `<strong>Actors: </strong> ${movie.actors}<br><strong>Rating: </strong> ${movie.rating}<br><strong>Id : </strong>${movie.id}</p>`;
                 htmlStr += `<label for="editName"></label>`;
-                htmlStr += `<input type="text" class="${movie.id}" placeholder="Title">`;
+                htmlStr += `<input type="text" class="editName${movie.id}" placeholder="Title">`;
                 htmlStr += `<label for="editDirector"></label>`;
-                htmlStr += `<input type="text" class="${movie.id}" placeholder="Director(s)">`;
+                htmlStr += `<input type="text" class="editDirector${movie.id}" placeholder="Director(s)">`;
                 htmlStr += `<label for="editRating"></label>`;
-                htmlStr += `<input type="text" class="editRating[${movie.id}" placeholder="Rating">`;
+                htmlStr += `<input type="text" class="editRating${movie.id}" placeholder="Rating">`;
                 htmlStr += `<button class="editMovie" type="button" data-id="${movie.id}">Edit Movie Info</button>`;
                 htmlStr += `<button class="deleteMovie" type="button" data-id="${movie.id}">Delete</button>`;
 
@@ -46,17 +38,22 @@ const getMovies = () => {
             }
 
             setTimeout(function (){
+                //The container displays after loader function has ran
                 $("#container").html(htmlStr)
-                $('.editMovie').click((e) =>{
-                    let movieID = $(e.target).data("id");
-                    console.log($(this));
+                // $('#container').append(htmlStr);
 
+                $('.editMovie').click((e) =>{
+                    //Targets the object's ID Number from the edit button and the delete button
+                    let movieID = $(e.target).data("id");
+
+                    //Is assigned to each class of the inputs
                     let editMovie = {
-                        title: $('.editName').val(),
-                        director: $('.editDirector').val(),
-                        rating: $('.editRating').val()
+                        title: $('.editName'+ movieID).val(),
+                        director: $('.editDirector'+ movieID).val(),
+                        rating: $('.editRating'+ movieID).val()
                     }
 
+                    //Defining the PUT method
                     let putOptions = {
                         method: 'PUT',
                         headers: {
@@ -65,15 +62,19 @@ const getMovies = () => {
                         body: JSON.stringify(editMovie)
                     }
 
-
+                    //${movieID} variable is assigned to the url in order to gather the id from the object
                     fetch(`https://lunar-spice-chocolate.glitch.me/movies/${movieID}`, putOptions)
 
                         .then(resp => resp.json())
-                        .then(getMovies);
+                        .then(getMovies)
+
                 })
 
+                    //The delete button click function
                 $('.deleteMovie').click(function (e){
                     var deleteMovie = $(e.target).data("id");
+
+                    //The delete method variable
                     let deleteOptions = {
                         method: 'DELETE',
                         headers: {
@@ -92,6 +93,7 @@ const getMovies = () => {
 }
     getMovies();
 
+    //Add movie function allows users to input their own movie names to the list of arrays
     $('#newMovie').click(() =>{
 
         let addMovie = {

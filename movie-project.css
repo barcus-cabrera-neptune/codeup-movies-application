@@ -1,0 +1,16 @@
+body{
+    background-color: mediumpurple;
+    color: whitesmoke;
+}
+
+.back{
+    background-color: rebeccapurple;
+    padding: 2rem;
+}
+
+.jumbotron{
+    /*background-image: url("img/moldyPeaches.jpg");*/
+    /*back*/
+    height: 20rem;
+
+}
