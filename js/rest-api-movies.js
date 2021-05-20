@@ -114,25 +114,5 @@ const getMovies = () => {
 
     });
 
-    // $('.editMovie').click(() =>{
-    //     console.log("hello");
-    //     let editMovie = {
-    //         title: $('#editName').val(),
-    //         director: $('#editDirector').val(),
-    //         rating: $('#editRating').val()
-    //     }
-    //
-    //     let putOptions = {
-    //         method: 'PUT',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify(editMovie)
-    //     }
-    //
-    //     fetch("https://lunar-spice-chocolate.glitch.me/movies/2",putOptions)
-    //         .then(resp => resp.json())
-    //         .then(getMovies);
-    // });
 
 
