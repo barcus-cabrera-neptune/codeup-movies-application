@@ -9,8 +9,12 @@ body{
 }
 
 .jumbotron{
-    /*background-image: url("img/moldyPeaches.jpg");*/
-    /*back*/
-    height: 20rem;
+    background-image: url("img/tell-when-its-safe-eat-around-moldy-food.w1456.jpg");
+    background-repeat: repeat-x;
+    height: 18em;
+}
 
+.jumbo-text {
+    color: mediumpurple;
+    opacity: 0.5;
 }

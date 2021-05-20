@@ -21,19 +21,34 @@ const getMovies = () => {
             removeLoader();
             console.log(movies);
             let htmlStr = "";
+                // Moving the add movie form to be dynamically created AND above the list of movies
+                htmlStr += `<div class="container justify-content-center align-items-center">`;
+                htmlStr += `<h1>Add Your Own Movie</h1>`;
+                htmlStr += `<label for="titleName"></label>`;
+                htmlStr += `<input type="text" id="titleName" placeholder="Title">`
+                htmlStr += `<label for="directorName"></label>`;
+                htmlStr += `<input type="text" id="directorName" placeholder="Director(s)">`;
+                htmlStr += `<label for="actorName"></label>`;
+                htmlStr += `<input type ="text" id="actorName" placeholder="Actor(s)">`
+                htmlStr += `<label for="ratingValue"></label>`;
+                htmlStr += `<input type="text" id="ratingValue" placeholder="Rating">`;
+                htmlStr += ` <button id="newMovie" type="button">Add Movie Info</button>`;
+                htmlStr += `</div>`;
+                //The loop of dynamically created movies that is called from the API
             for (let movie of movies) {
                 console.log(movies);
                 htmlStr += `<h1>${movie.title}</h1><p><strong>Director:</strong> ${movie.director} <br>`;
-                htmlStr += `<strong>Actors: </strong> ${movie.actors}<br><strong>Rating: </strong> ${movie.rating}<br><strong>Id : </strong>${movie.id}</p>`;
+                htmlStr += `<strong>Actors: </strong> ${movie.actors}<br><strong>Rating: </strong> ${movie.rating}<br></p>`;
                 htmlStr += `<label for="editName"></label>`;
                 htmlStr += `<input type="text" class="editName${movie.id}" placeholder="Title">`;
                 htmlStr += `<label for="editDirector"></label>`;
                 htmlStr += `<input type="text" class="editDirector${movie.id}" placeholder="Director(s)">`;
+                htmlStr += `<label for="editActor"></label>`;
+                htmlStr += `<input type="text" class="editActor${movie.id}" placeholder="Actor(s)">`;
                 htmlStr += `<label for="editRating"></label>`;
                 htmlStr += `<input type="text" class="editRating${movie.id}" placeholder="Rating">`;
                 htmlStr += `<button class="editMovie" type="button" data-id="${movie.id}">Edit Movie Info</button>`;
                 htmlStr += `<button class="deleteMovie" type="button" data-id="${movie.id}">Delete</button>`;
-
 
             }
 
@@ -50,6 +65,7 @@ const getMovies = () => {
                     let editMovie = {
                         title: $('.editName'+ movieID).val(),
                         director: $('.editDirector'+ movieID).val(),
+                        actors: $('.editActors' + movieID).val(),
                         rating: $('.editRating'+ movieID).val()
                     }
 
@@ -87,34 +103,37 @@ const getMovies = () => {
                         .then(getMovies);
                 })
 
+                //Add movie function allows users to input their own movie names to the list of arrays
+                $('#newMovie').click(() =>{
+
+                    let addMovie = {
+                        title : $('#titleName').val(),
+                        director : $('#directorName').val(),
+                        actors : $('#actorName').val(),
+                        rating : $('#ratingValue').val()
+                    }
+
+                    let postOptions = {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(addMovie)
+                    }
+
+                    fetch("https://lunar-spice-chocolate.glitch.me/movies",postOptions)
+                        .then(resp => resp.json())
+                        .then(getMovies);
+
+                });
+
             }, 1050)
 
         });
 }
     getMovies();
 
-    //Add movie function allows users to input their own movie names to the list of arrays
-    $('#newMovie').click(() =>{
 
-        let addMovie = {
-            title : $('#titleName').val(),
-            director : $('#directorName').val(),
-            rating : $('#ratingValue').val()
-        }
-
-        let postOptions = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(addMovie)
-        }
-
-        fetch("https://lunar-spice-chocolate.glitch.me/movies",postOptions)
-            .then(resp => resp.json())
-            .then(getMovies);
-
-    });
 
 
 
