@@ -7,8 +7,6 @@ function removeLoader() {
         $("#loadingDiv").remove(); //makes page more lightweight
     });
 }
-
-
 //Get Method
 
 // Main Function
@@ -55,7 +53,6 @@ const getMovies = () => {
             setTimeout(function (){
                 //The container displays after loader function has ran
                 $("#container").html(htmlStr)
-                // $('#container').append(htmlStr);
 
                 $('.editMovie').click((e) =>{
                     //Targets the object's ID Number from the edit button and the delete button
