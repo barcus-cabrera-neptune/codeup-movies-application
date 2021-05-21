@@ -5,7 +5,7 @@
 
 //Removes the div of the load image
 function removeLoader() {
-    $("#loadingDiv").fadeOut(2000, function () {
+    $("#loadingDiv").fadeOut(6000, function () {
         // fadeOut complete. Remove the loading div
         $("#loadingDiv").remove(); //makes page more lightweight
     });
@@ -14,7 +14,8 @@ function removeLoader() {
 
 // Main Function
 const getMovies = () => {
-    $('#container').append('<div class="container d-flex justify-content-center align-items-center" id="loadingDiv"><div class="loader"><img src="img/Loading.gif"' +
+    //Peach GIF by Jonah Ainslie
+    $('#container').append('<div class="container d-flex justify-content-center align-items-center" id="loadingDiv"><div class="loader"><img src="img/giphy.gif"' +
         ' alt="loadingGif"></div></div>');
     fetch("https://lunar-spice-chocolate.glitch.me/movies")
         .then(resp => resp.json())
@@ -42,7 +43,7 @@ const getMovies = () => {
                 htmlStr += `<label for="ratingValue"></label>`;
                 htmlStr += `<input type="text" id="ratingValue" placeholder="Rating">`;
                 htmlStr +=  `</div>`;
-                htmlStr += `<div class="col-3 Title">`;
+                htmlStr += `<div class="col-12 Title">`;
                 htmlStr += `<label for="genreValue"></label>`;
                 htmlStr += `<input type="text" id="genreValue" placeholder="Genre">`;
                 htmlStr +=  `</div>`;
@@ -78,7 +79,7 @@ const getMovies = () => {
                 htmlStr += `<label for="editRating"></label>`;
                 htmlStr += `<input type="text" class="editRating${movie.id}" placeholder="Rating">`;
                 htmlStr += `</div>`;
-                htmlStr += `<div class="col-3 Title">`;
+                htmlStr += `<div class="col-12 Title ">`;
                 htmlStr += `<label for="editGenre"></label>`;
                 htmlStr += `<input type="text" class="editGenre${movie.id}" placeholder="Genre">`;
                 htmlStr += `</div>`;
@@ -171,7 +172,7 @@ const getMovies = () => {
 
                 });
 
-            }, 1500)
+            }, 4000)
 
         });
 }
