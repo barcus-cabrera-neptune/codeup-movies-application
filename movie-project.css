@@ -23,11 +23,6 @@ body{
     border-radius: 1rem;
 }
 
-/*.jumbo-text {*/
-/*    color: mediumpurple;*/
-/*    opacity: 0.5;*/
-/*}*/
-
 img{
     border-radius: 50%;
     border: black solid 8px;
@@ -63,6 +58,6 @@ input{
     border-radius: 1rem;
 }
 
-.editInfo{
+.hidden {
     visibility: hidden;
 }

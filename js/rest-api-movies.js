@@ -1,5 +1,8 @@
 "use strict";
 
+// Movie Poster API?
+
+
 //Removes the div of the load image
 function removeLoader() {
     $("#loadingDiv").fadeOut(2000, function () {
@@ -39,6 +42,10 @@ const getMovies = () => {
                 htmlStr += `<label for="ratingValue"></label>`;
                 htmlStr += `<input type="text" id="ratingValue" placeholder="Rating">`;
                 htmlStr +=  `</div>`;
+                htmlStr += `<div class="col-3 Title">`;
+                htmlStr += `<label for="genreValue"></label>`;
+                htmlStr += `<input type="text" id="genreValue" placeholder="Genre">`;
+                htmlStr +=  `</div>`;
                 htmlStr += `<div class="col-12 Title">`;
                 htmlStr += ` <button id="newMovie" type="button">Add Movie Info</button>`;
                 htmlStr += `</div>`;
@@ -52,8 +59,9 @@ const getMovies = () => {
                 htmlStr += `<p><strong>Director:</strong> ${movie.director}</p>`;
                 htmlStr += `<p><strong>Actors: </strong> ${movie.actors}</p>`;
                 htmlStr += `<p><strong>Rating: </strong> ${movie.rating}</p>`;
+                htmlStr += `<p><strong>Genre: </strong> ${movie.genre}</p>`;
                 htmlStr += `<button class="col-2 editMovie">Edit Movie</button>`//Option to edit movie details
-                htmlStr += `<div class="row justify-content-center align-items-center editInfo">`;
+                htmlStr += `<div class="row justify-content-center align-items-center hidden" id="editInfo${movie.id}">`;
                 htmlStr += `<div class="col-3 Title">`;
                 htmlStr += `<label for="editName"></label>`;
                 htmlStr += `<input type="text" class="editName${movie.id}" placeholder="Title">`;
@@ -70,6 +78,10 @@ const getMovies = () => {
                 htmlStr += `<label for="editRating"></label>`;
                 htmlStr += `<input type="text" class="editRating${movie.id}" placeholder="Rating">`;
                 htmlStr += `</div>`;
+                htmlStr += `<div class="col-3 Title">`;
+                htmlStr += `<label for="editGenre"></label>`;
+                htmlStr += `<input type="text" class="editGenre${movie.id}" placeholder="Genre">`;
+                htmlStr += `</div>`;
                 htmlStr += `<div class="col-12 Title">`;
                 htmlStr += `<button class="makeChange" type="button" data-id="${movie.id}">Commit Changes</button>`;
                 htmlStr += `<button class="deleteMovie" type="button" data-id="${movie.id}">Delete</button>`;
@@ -77,26 +89,27 @@ const getMovies = () => {
                 htmlStr += `</div>`;
                 htmlStr += `</div>`;
 
+
             }
 
             setTimeout(function (){
                 //The container displays after loader function has ran
                 $("#container").html(htmlStr)
-
-                $(".editMovie").click(function(){
-
-                    $(".editInfo").css({"visibility" : "initial"});
+                //Allows us to hide the edit movie options before the button is clicked
+                $(".editMovie").click(function(e){
+                    $(this).next().toggleClass("hidden");
                 })
                 $('.makeChange').click((e) =>{
                     //Targets the object's ID Number from the edit button and the delete button
                     let movieID = $(e.target).data("id");
-
-                    //Is assigned to each class of the inputs
+                    console.log($(".makeChange"));
+                    //IDs assigned to each class of the inputs
                     let editMovie = {
                         title: $('.editName'+ movieID).val(),
                         director: $('.editDirector'+ movieID).val(),
                         actors: $('.editActors' + movieID).val(),
-                        rating: $('.editRating'+ movieID).val()
+                        rating: $('.editRating'+ movieID).val(),
+                        genre: $('.editGenre' + movieID).val()
                     }
 
                     //Defining the PUT method
@@ -140,7 +153,8 @@ const getMovies = () => {
                         title : $('#titleName').val(),
                         director : $('#directorName').val(),
                         actors : $('#actorName').val(),
-                        rating : $('#ratingValue').val()
+                        rating : $('#ratingValue').val(),
+                        genre : $('#genreValue').val()
                     }
 
                     let postOptions = {
